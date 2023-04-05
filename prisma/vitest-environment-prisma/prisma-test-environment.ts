@@ -15,8 +15,6 @@ function generateDatabaseUrl(schema: string) {
 
   url.searchParams.set('schema', schema)
 
-  execSync('npx prisma migrate deploy')
-
   return url.toString()
 }
 
@@ -27,6 +25,8 @@ export default <Environment>{
     const databaseUrl = generateDatabaseUrl(schema)
 
     process.env.DATABASE_URL = databaseUrl
+
+    execSync('npx prisma migrate deploy')
 
     return {
       async teardown() {
